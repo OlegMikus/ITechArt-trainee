@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
-from . import db
+from flask import Blueprint, jsonify, render_template
+from flask_login import login_required, current_user
+
 
 main = Blueprint('main', __name__)
 
@@ -9,8 +10,7 @@ def index():  # put application's code here
     return render_template('index.html')
 
 
+@login_required
 @main.route('/profile')
 def profile():
-    return render_template('profile.html')
-
-
+    return jsonify(current_user)
