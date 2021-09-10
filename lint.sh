@@ -6,6 +6,7 @@ set -o errexit # exit script when command fails
 set -o pipefail # this setting prevents errors in a pipeline from being masked
 set -o nounset # exit script when it tries to use undeclared variables
 
+pylint --load-plugins pylint_flask
 echo 'pylint'
 pylint .
 echo 'flake8'
