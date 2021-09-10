@@ -1,17 +1,15 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-
-from . import db
 
 main = Blueprint('main', __name__)
 
 
 @main.route('/')
-def index():  # put application's code here
-    return render_template('index.html')
+def index():
+    return jsonify({'page': 'main page'})
 
 
 @login_required
 @main.route('/profile')
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return jsonify({'page': f'{current_user.name} profile'})
