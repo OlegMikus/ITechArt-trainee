@@ -1,5 +1,5 @@
-from flask import Blueprint, redirect, url_for, request, render_template
-from flask_login import login_user
+from flask import Blueprint, redirect, url_for, request, jsonify
+from flask_login import login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from .models import User
@@ -8,49 +8,39 @@ from . import db
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login')
-def login():  # put application's code here
-    return render_template('login.html')
-
-
 @auth.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
-
+    request_data = request.get_json()
+    email = request_data['email']
+    password = str(request_data['password'])
     user = User.query.filter_by(email=email).first()
     if not user or not check_password_hash(user.password, password):
-        return redirect(url_for('auth.login'))
+        return jsonify({'info': 'smth wrong'})
 
-    login_user(user,remember=remember)
+    login_user(user)
 
-    return redirect(url_for('main.profile'))
-
-
-@auth.route('/signup')
-def signup():
-    return render_template('signup.html')
+    return jsonify({'info': 'you are log IN'})
 
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
-    print(request.get_json())
-    email = request.form.get('email')
-    name = request.form.get('name')
-    password = request.form.get('password')
+    request_data = request.get_json()
+    email = request_data['email']
+    name = request_data['name']
+    password = str(request_data['password'])
 
     user = User.query.filter_by(email=email).first()
     if user:
-        return redirect(url_for('auth.signup'))
+        return jsonify({'info': 'smth wrong'})
 
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
 
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('auth.login'))
+    return jsonify({'info': 'congratulation'})
 
 
 @auth.route('/logout')
 def logout():
-    return 'UR OUT NOW'
+    logout_user()
+    return jsonify({'info': 'you are log OUT'})
