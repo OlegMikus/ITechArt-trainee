@@ -1,15 +1,12 @@
-from flask import Blueprint, request, jsonify
-from flask_login import login_user, logout_user
+from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from flaskapp.models import User
-from flaskapp import db
-
-auth = Blueprint('auth', __name__)
+from src.models.user import User
+from src.config.app import db, app
 
 
-@auth.route('/login', methods=['POST'])
-def login_post():
+@app.route('/login', methods=['POST'])
+def login():
     request_data = request.get_json()
     email = request_data['email']
     password = str(request_data['password'])
@@ -17,13 +14,11 @@ def login_post():
     if not user or not check_password_hash(user.password, password):
         return jsonify({'info': 'smth wrong'})
 
-    login_user(user)
-
     return jsonify({'info': 'you are log IN'})
 
 
-@auth.route('/signup', methods=['POST'])
-def signup_post():
+@app.route('/signup', methods=['POST'])
+def signup():
     request_data = request.get_json()
     email = request_data['email']
     name = request_data['name']
@@ -40,7 +35,18 @@ def signup_post():
     return jsonify({'info': 'congratulation'})
 
 
-@auth.route('/logout')
+@app.route('/logout')
 def logout():
-    logout_user()
     return jsonify({'info': 'you are log OUT'})
+
+
+@app.route('/profile')
+def profile():
+    return 'str'
+
+
+@app.route('/')
+def index():
+    return jsonify({'page': 'main page'})
+
+
