@@ -1,7 +1,8 @@
-from flaskapp import db
+from src.config.app import db
 
 
 class User(db.Model):
+    """ User Model for storing user related details """
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
