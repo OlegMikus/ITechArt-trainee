@@ -11,4 +11,4 @@ RUN pip3 install pipenv
 COPY Pipfile Pipfile.lock ./
 
 RUN pipenv install --system --deploy --ignore-pipfile
-COPY . .
+COPY ./src .
