@@ -1,20 +1,26 @@
 version: "3.8"
 
+networks:
+  trainee_network:
+    driver: bridge
+
 services:
   flask:
     restart: always
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'flask run'
+    command: 'flask run -h "localhost" -p "8000"'
     volumes:
       - .:/usr/src/flask_app/
     ports:
-      - 5000:5000
-    env_file:
-      - .env
+      - 8000:8000
+    expose:
+      - 8000
     depends_on:
       - db
+    networks:
+      - trainee_network
 
   db:
     image: postgres:12.8
@@ -25,7 +31,9 @@ services:
         POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
         POSTGRES_DB: "${DATABASE_NAME}"
     ports:
-      - 54322:5432
+      - 5432:5432
+    networks:
+      - trainee_network
 
 volumes:
   postgres_data:

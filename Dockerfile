@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9
 
 WORKDIR /usr/src/flask_app
 
@@ -11,4 +11,4 @@ RUN pip3 install pipenv
 COPY Pipfile Pipfile.lock ./
 
 RUN pipenv install --system --deploy --ignore-pipfile
-COPY . /usr/src/flask_app
+COPY . .

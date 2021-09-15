@@ -19,6 +19,6 @@ flask-migrate = "==3.1.0"
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
 
 [scripts]
