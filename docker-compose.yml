@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  flask:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'flask run'
+    volumes:
+      - .:/usr/src/flask_app/
+    ports:
+      - 5000:5000
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.8
+    volumes:
+        - postgres_data:/var/lib/postgresql/data/
+    environment:
+        POSTGRES_USER: "${DATABASE_USER}"
+        POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+        POSTGRES_DB: "${DATABASE_NAME}"
+    ports:
+      - 54322:5432
+
+volumes:
+  postgres_data:
