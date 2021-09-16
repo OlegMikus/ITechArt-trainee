@@ -13,6 +13,8 @@ set -o nounset # exit script when it tries to use undeclared variables
 cd "$(dirname "${BASH_SOURCE[0]}")"
 FILE_DIR=$(pwd)
 cd ..
+cd ..
 CWD="$(pwd)"
 
-./scripts/tests.sh
+chmod ug+x "${CWD}/scripts/tests.sh"
+"${CWD}"/scripts/tests.sh
