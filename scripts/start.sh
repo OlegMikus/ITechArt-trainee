@@ -13,5 +13,4 @@ FILE_DIR=$(pwd)
 cd ..
 CWD="$(pwd)"
 
-
-pytest .
+docker-compose -f docker-compose.yml up

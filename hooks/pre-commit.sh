@@ -13,10 +13,8 @@ set -o nounset # exit script when it tries to use undeclared variables
 cd "$(dirname "${BASH_SOURCE[0]}")"
 FILE_DIR=$(pwd)
 cd ..
+cd ..
 CWD="$(pwd)"
 
-./scripts/lint.sh
-#
-#cd "${CWD}"
-#cp -f "${CWD}/hooks/pre-commit.sh" "${CWD}/.git/hooks/pre-commit"
-#chmod ug+x "${CWD}/.git/hooks/pre-commit"
+chmod ug+x "${CWD}/scripts/lint.sh"
+"${CWD}"/scripts/lint.sh

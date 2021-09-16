@@ -23,3 +23,5 @@ pytest = "==6.2.5"
 python_version = "3.9"
 
 [scripts]
+start = 'bash ./scripts/start.sh'
+cleanup = 'bash ./scripts/cleanup.sh'

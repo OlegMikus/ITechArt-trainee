@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from src.models.user import User
@@ -6,7 +6,7 @@ from src.config.app import db, app
 
 
 @app.route('/login', methods=['POST'])
-def login():
+def login() -> Response:
     request_data = request.get_json()
     email = request_data['email']
     password = str(request_data['password'])
@@ -18,7 +18,7 @@ def login():
 
 
 @app.route('/signup', methods=['POST'])
-def signup():
+def signup() -> Response:
     request_data = request.get_json()
     email = request_data['email']
     name = request_data['name']
@@ -36,17 +36,15 @@ def signup():
 
 
 @app.route('/logout')
-def logout():
+def logout() -> Response:
     return jsonify({'info': 'you are log OUT'})
 
 
 @app.route('/profile')
-def profile():
+def profile() -> str:
     return 'str'
 
 
 @app.route('/')
-def index():
+def index() -> Response:
     return jsonify({'page': 'main page'})
-
-
