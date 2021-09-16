@@ -15,8 +15,7 @@ FILE_DIR=$(pwd)
 cd ..
 CWD="$(pwd)"
 
-./lint.sh
-
+./scripts/lint.sh
 #
 #cd "${CWD}"
 #cp -f "${CWD}/hooks/pre-commit.sh" "${CWD}/.git/hooks/pre-commit"
