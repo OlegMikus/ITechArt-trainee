@@ -15,7 +15,7 @@ CWD="$(pwd)"
 
 echo ">>> setup python packages by pipenv"
 
-pipenv install --system --deploy --ignore-pipfile
+pipenv install --system --deploy --ignore-pipfile --dev
 pipenv update
 
 echo ">>> DONE"
