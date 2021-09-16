@@ -10,10 +10,10 @@ class User(db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
 
-    def __init__(self, email, password, name):
+    def __init__(self, email: str, password: str, name: str) -> None:
         self.name = name
         self.email = email
         self.password = password
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"User('{self.name}')"
