@@ -14,10 +14,10 @@ def login() -> Response:
         session['logged_in'] = True
 
         access_token = create_access_token(request_data)
-        refresh_token = create_refresh_token(request_data)
+        ref_token = create_refresh_token(request_data)
 
         return jsonify({'access_token': access_token.decode('UTF-8'),
-                        'refresh_token': refresh_token.decode('UTF-8')})
+                        'refresh_token': ref_token.decode('UTF-8')})
 
     return jsonify({'info': 'something wrong'})
 
@@ -28,10 +28,10 @@ def refresh_token() -> Response:
 
     request_data = request.get_json()
     access_token = create_access_token(request_data)
-    refresh_token = create_refresh_token(request_data)
+    ref_token = create_refresh_token(request_data)
 
     return jsonify({'access_token': access_token.decode('UTF-8'),
-                    'refresh_token': refresh_token.decode('UTF-8')})
+                    'refresh_token': ref_token.decode('UTF-8')})
 
 
 @app.route('/signup', methods=['POST'])
