@@ -31,7 +31,8 @@ def refresh_token() -> Response:
     ref_token = create_refresh_token(request_data)
 
     return jsonify({'access_token': access_token.decode('UTF-8'),
-                    'refresh_token': ref_token.decode('UTF-8')})
+                    'refresh_token': ref_token.decode('UTF-8'),
+                    'redirect-url': 'http://localhost:8000/profile'})
 
 
 @app.route('/signup', methods=['POST'])
