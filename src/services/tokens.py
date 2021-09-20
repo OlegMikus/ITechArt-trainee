@@ -26,35 +26,20 @@ def token_required(func: Any) -> Any:
     return decorated
 
 
-def refresh_required(func: Any) -> Any:
-    @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Response:
-        refresh_token = request.headers['refresh_token']
-        if not refresh_token:
-            return jsonify({'Alert!': ' refresh Token is missing!'})
-        try:
-            data = jwt.decode(refresh_token, app.config['SECRET_KEY'])
-            print(data)
-        except jwt.InvalidTokenError:
-            return jsonify({'Message': 'Invalid refresh token. Please log in again.'})
-        return func(*args, **kwargs)
-
-    return wrapper
-
-
-def create_access_token(data: Any) -> bytes:
-    token = jwt.encode({
+def create_tokens(data: Any) -> dict:
+    access_token = jwt.encode({
         'user_email': data['email'],
         'exp': datetime.utcnow() + timedelta(seconds=180),
     },
         app.config['SECRET_KEY'])
-    return token
-
-
-def create_refresh_token(data: Any) -> bytes:
-    token = jwt.encode({
+    refresh_token = jwt.encode({
         'user_email': data['email'],
         'exp': datetime.utcnow() + timedelta(days=30),
     },
         app.config['SECRET_KEY'])
-    return token
+
+    tokens = {
+        'access_token': access_token,
+        'refresh_token': refresh_token
+    }
+    return tokens
