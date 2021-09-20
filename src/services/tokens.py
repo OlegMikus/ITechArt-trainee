@@ -17,9 +17,9 @@ def token_required(func: Any) -> Any:
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             print(data)
+        except jwt.ExpiredSignatureError:
+            return jsonify({'Message': 'http://localhost:8000/refresh'})
         except jwt.InvalidTokenError:
-            if jwt.InvalidTokenError == 'Signature has expired':
-                return jsonify({'Message': 'http://localhost:8000/refresh'})
             return jsonify({'Message': 'Invalid token. Please log in again.'})
         return func(*args, **kwargs)
 
@@ -45,7 +45,7 @@ def refresh_required(func: Any) -> Any:
 def create_access_token(data: Any) -> bytes:
     token = jwt.encode({
         'user_email': data['email'],
-        'exp': datetime.utcnow() + timedelta(seconds=180),
+        'exp': datetime.utcnow() + timedelta(seconds=60),
     },
         app.config['SECRET_KEY'])
     return token
