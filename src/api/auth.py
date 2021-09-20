@@ -25,7 +25,6 @@ def login() -> Response:
 @app.route('/refresh')
 @refresh_required
 def refresh_token() -> Response:
-
     request_data = request.get_json()
     access_token = create_access_token(request_data)
     ref_token = create_refresh_token(request_data)
@@ -33,6 +32,16 @@ def refresh_token() -> Response:
     return jsonify({'access_token': access_token.decode('UTF-8'),
                     'refresh_token': ref_token.decode('UTF-8'),
                     'redirect-url': 'http://localhost:8000/profile'})
+
+
+@app.route('/logout')
+@token_required
+def logout() -> Response:
+    access_token = None
+    ref_token = None
+    return jsonify({'access_token': access_token,
+                    'refresh_token': ref_token,
+                    'info': 'If you see this, then you logged OUT'})
 
 
 @app.route('/signup', methods=['POST'])
