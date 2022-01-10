@@ -14,4 +14,4 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-from src.api.auth import app
+from src.api import app
